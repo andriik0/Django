@@ -1,0 +1,53 @@
+{% load contact_us %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% block title %}Hi, {{ request.user.first_name | capfirst }}!{% endblock %}</h1>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        {% block lead %}
+        <p class="lead">Welcome to the ELK Dashboard!</p>
+        {% endblock %}
+        {% block message %}
+        <p class="before_list">On Dashboard, you can:</p>
+        <ul>
+            <li>plan your lessons</li>
+            <li>review your ELK subscription status</li>
+            <li>see all of the interesting stuff that’s happening right now in the ELK world</li>
+        </ul>
+
+        {% endblock %}
+
+        {% block disclaimer %}
+        <p class="homepage-disclaimer">ELK Academy is thrilled to have recently
+            launched Dashboard, and we’re excited to continue developing this new tool.
+            Please feel free to {% contact_us 'drop us a line' 'pseudo' %} if you encounter any difficulties
+            while navigating the website.  We’d love your input!
+        </p>
+        {% endblock %}
+
+    </div>
+    <div class="col-md-4">
+        {% block next_lesson %}
+            {% include 'market/_partial/next_lesson.html' %}
+        {% endblock %}
+    </div>
+</div>
+
+{% block call_to_action %}
+<div class="row homepage-big-blue-button">
+    <div class="col-md-12 text-center">
+        {% if request.user.crm.classes.nearest_scheduled %}
+            <button class="btn btn-primary btn-lg load_schedule_popup" data-toggle="modal" data-target=".schedule-popup-container">Plan another lesson</button>
+        {% else %}
+            <button class="btn btn-primary btn-lg load_schedule_popup" data-toggle="modal" data-target=".schedule-popup-container">Plan a lesson</button>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

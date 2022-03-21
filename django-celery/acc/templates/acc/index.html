@@ -1,0 +1,5 @@
+{% extends 'elk/base.html' %}
+
+{% block content %}
+    {% include 'acc/greetings/'|add:GREETING|add:'.html'%}
+{% endblock %}

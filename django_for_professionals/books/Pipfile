@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+psycopg2-binary = "*"
+django-crispy-forms = "*"
+django-allauth = "*"
+pillow = "*"
+flake8 = "*"
+pycodestyle = "*"
+pyflakes = "*"
+stripe = "*"
+django-debug-toolbar = "*"
+django-admin-honeypot = "*"
+debugpy = "*"
+whitenoise = "*"
+gunicorn = "*"
+dj-database-url = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

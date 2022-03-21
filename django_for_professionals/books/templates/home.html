@@ -1,0 +1,41 @@
+{% extends '_base.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block content %}
+<h1>
+Homepage
+</h1>
+
+<form action="{% url 'search_results' %}" method="get">
+<input type="text" name="q" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
+</form>
+
+<img class="bookcover" src="{% static 'images/djangoforprofessionals.jpg' %}">
+{% if user.is_authenticated %}
+    <p>
+    Hi {{ user.email }}!
+    </p>
+    <p>
+        <a href="{% url 'account_logout' %}">Log Out</a>
+    </p>
+{% else %}
+    <p>
+    You are not logged in
+    </p>
+    <p>
+    <a href="{% url 'account_login' %}">Log In</a>
+    </p>
+    <p>
+    <a href="{% url 'account_signup' %}">Sign Up</a>
+    </p>
+    <p>
+    <a href="{% provider_login_url 'github' %}">Sign Up via GitHub</a>
+    </p>
+
+{% endif %}
+{% endblock content %}

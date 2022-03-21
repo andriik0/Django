@@ -1,0 +1,28 @@
+version: '3'
+
+
+services:
+    web:
+        build: .
+        command: python /code/manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/code
+        ports:
+            - 8000:8000
+        depends_on: 
+            - db
+        links:
+            - db:db
+        networks: 
+            some_network:
+
+    db:
+        image: postgres
+        environment: 
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - '5432'
+        networks: 
+            some_network:
+networks:
+    some_network:

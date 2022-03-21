@@ -1,0 +1,34 @@
+{% extends 'elk/boilerplate.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'vendor/bootstrap-social/bootstrap-social.css'%}">
+{% endblock %}
+
+{% block body-class %}fancy-login{% endblock %}
+
+{% block container %}
+<div class="container">
+    {% include "elk/_partial/flash_messages.html" %}
+    <div class="row login-jumbotron">
+        <div class="col-xs-12 login-jumbotron__message text-center">
+            <h1>Welcome to the Dashboard</h1>
+            <h5 class="login-jumbotron__benefit">Dashboard keeps track of your ELK studies and helps you communicate with teachers</h5>
+            <p>Please login to start learning</p>
+            <p class="login-jumbotron__buttons">
+                <a class="btn btn-social btn-google" href="{% url 'acc:social:begin' 'google-oauth2' %}?next={{ next | urlencode}}">
+                    <span class="fa fa-google"></span>
+                    Google
+                </a>
+                <a class="btn btn-social btn-facebook" href="{% url 'acc:social:begin' 'facebook' %}?next={{ next| urlencode }}">
+                    <span class="fa fa-facebook"></span>
+                    Facebook
+                </a>
+            </p>
+        </div>
+    </div>
+    <div class="staff-login text-right">
+        <a href="/admin/login?next=/" title = "staff login"><i class="fa fa-cloud" aria-hidden="true"></i></a>
+    </div>
+</div>
+{% endblock %}

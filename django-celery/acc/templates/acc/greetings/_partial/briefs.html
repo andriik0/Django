@@ -1,0 +1,57 @@
+{% load i18n %}
+{% load stripe %}
+
+<section class="row subscription__briefs">
+    <div class="col-md-3 col-md-offset-3 subscription-brief">
+        <h3 class="subscription-brief__title">ELK Subscription</h3>
+        <div class="subscription-brief__lessons">
+            {% for lesson_type in product1.lessons %}
+            <div class="subscription-brief__lesson">
+                <div class="subscription-brief__lesson__count"><span>{{ lesson_type.count }}</span></div>
+                <div class="subscription-brief__lesson__name">
+                    {% if lesson_type.count > 1 %} {{ lesson_type.first.long_name_plural }} {% else %} {{ lesson_type.first.long_name }} {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if product1_tier %}
+            <div class="subscription-brief__payment">
+                {% stripe_form 'Pay by card' 'btn-primary' product1 product1_tier.cost request.user.crm %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-md-3 subscription-brief subscription-brief-beginners">
+        <h3 class="subscription-brief__title">ELK Intro Course</h3>
+        <div class="subscription-brief__lessons">
+            {% for lesson_type in simple_subscription.lessons %}
+            <div class="subscription-brief__lesson">
+                <div class="subscription-brief__lesson__count"><span>{{ lesson_type.count }}</span></div>
+                <div class="subscription-brief__lesson__name">
+                    {% if lesson_type.count > 1 %} {{ lesson_type.first.long_name_plural }} {% else %} {{ lesson_type.first.long_name }} {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if simple_subscription_tier %}
+            <div class="subscription-brief__payment">
+                {% stripe_form 'Pay by card' 'btn-primary' simple_subscription simple_subscription_tier.cost request.user.crm %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 subscription__footnote">
+        <p>We will activate your subscription immediately</p>
+    </div>
+</div>
+
+{% if single_lesson_tier %}
+    <div class="row subscription__alternative">
+        {% with 'Buy a single lesson for '|add:single_lesson_tier.name as caption %}
+            <div class="col-md-12">Alternatively {% stripe_form caption 'btn-default' single_lesson single_lesson_tier.cost request.user.crm %}</div>
+        {% endwith %}
+    </div>
+{% endif %}
+
+
+{% stripe_processing_popup %}

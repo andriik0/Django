@@ -1,0 +1,54 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true
+        },
+        {
+            "name": "Python:Test Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test"
+            ],
+            "django": true
+        },
+        {
+            "name": "Python:Remote Test Django",
+            "type": "python",
+            "request": "launch",
+            "program": "debugpy",
+            "args": [
+                "--listen",
+                "0.0.0.0:9999",
+                "${workspaceFolder}/manage.py",
+                "test",
+            ],
+            "django": true
+        },
+        {
+            "name": "Python:Test Docker Django",
+            "type": "python",
+            "request": "attach",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/code"
+                },
+            ],
+            "port": 9999,
+            "host": "127.0.0.1",
+        },
+    ]
+}

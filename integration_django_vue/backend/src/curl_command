@@ -1,0 +1,9 @@
+curl \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE1OTAyNzIzLCJqdGkiOiIzY2UzOTU5ZTdhNjc0Mjk2YTM1OTQyNmUxODFmZGEyMCIsInVzZXJfaWQiOjF9.mIIPFM97w98fsXvFOJ0RGppbQGwRgLN9q1P9PpyzoAM" \
+   http://localhost:8000/api/v1/sepulkas/
+
+curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYxNTk4ODA4MSwianRpIjoiNDIxZDBjMzY3YTNkNGMzMzg3MjM3ODFjYjVhMjc4NmIiLCJ1c2VyX2lkIjoxfQ.BgVNawO4ZM480u7ZwSf72aCas0bLeZ4YWvOfuu2P2-w"}' \
+  http://localhost:8000/api/v1/token/refresh/

@@ -1,0 +1,66 @@
+{% extends 'elk/base.html'%}
+{% load i18n %}
+{% load humanize %}
+{% load markdown from django_markdown %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ object }}</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>{% trans 'Class info' %}</h3>
+        <dl class="inline timeline-entry-info">
+            <dt>Host</dt>
+            <dd>{% if object.teacher.user == request.user %}You{% else %}{{ object.teacher.user.crm.full_name }}{% endif %}</dd>
+
+            <dt>Start</dt>
+            <dd>{{ object.start | naturalday:'SHORT_DATE_FORMAT' | capfirst }}, {{ object.start | time:'TIME_FORMAT'}}</dd>
+
+            <dt>Lesson</dt>
+            <dd>{{ object.lesson.name }}</dd>
+            <dt>Slots</dt>
+            <dd>{{ object.taken_slots }}/{{ object.slots}}</dd>
+        </dl>
+        <p>{{ object.lesson.description | markdown }}</p>
+    </div>
+    <div class="col-md-4">
+        <h3>{% trans 'Students' %}</h3>
+        <table class="timeline-student-list table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>{% trans '#' %}</th>
+                    <th>{% trans 'Student' %}</th>
+            </thead>
+            <tbody>
+                {% for c in object.classes.all %}
+                    <tr>
+                        <td class="timeline-student-list__cnt">{{ forloop.counter }})</td>
+                        <td class="timeline-student-list__student"><a href="{{ c.customer.get_absolute_url }}">{{ c.customer.full_name }}</a>
+                            {% if not object.has_finished %}
+                                {% if object.lesson.timeline_entry_required or object.lesson.slots > 1 %}
+                                    <a class="timeline-student-list__actions" href="{% url 'timeline:delete_customer' username=object.teacher.user.username pk=object.pk customer=c.customer.pk %}" class="text-danger" title="{% trans 'Remove a student' %}" aria-hidden="true"><i class="fa fa-user-times"></i></a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if object.is_free %}
+            <div class="panel panel-default add-a-student hidden-print">
+                <div class="panel-body">
+                    <select class="add-a-student__selector" data-live-search="true">
+                        <option value="">Add a student</option>
+                        {% for c in students_for_adding %}
+                            <option value="{% url 'timeline:add_customer' username=object.teacher.user.username pk=object.pk customer=c.customer.pk %}">{{ c.customer.full_name }} ({{ c.customer.user.username }})</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-default add-a-student__add-btn disabled">{% trans 'Add' %}</button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

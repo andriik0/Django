@@ -1,0 +1,20 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: |
+          cd ./books
+          docker-compose up -d
+      - name: Test
+        run: |
+          docker exec -t books_web_1 python manage.py test -v 1

@@ -1,0 +1,112 @@
+@import 'nib'
+
+.schedule-popup
+
+    &__content
+        max-height: 400px
+        min-height: 400px
+        overflow-y: scroll
+        padding-top: 50px
+        padding-bottom: 10px
+        overflow-x: hidden  // disable horizontal scrollbar in firefox
+
+    &__content-loading
+        width: 95%
+        height: 360px
+        position: absolute
+        background-color: white
+        opacity: 0
+        &:not(.shown)
+            transition: opacity .3s ease
+            pointer-events: none
+            z-index: 0
+
+        &.shown
+            z-index: 500
+            opacity: 1
+
+    &__record
+        margin-bottom: 60px
+        &-name
+            display: inline
+            margin-top: 0
+        &-author, &-title
+            display: inline
+            font-size: 10px
+            margin: 0
+        &-photo
+            max-width: 40px
+            relative: top 4px
+
+        .col-md-1
+          text-align: right
+
+    &__date-selector
+        display: inline
+        margin-right: 50px
+
+        .form-group
+            padding-left: 20px
+        .bootstrap-select
+            max-width: 150px
+        .dropdown-menu
+            z-index: 600
+
+
+    &__not-loaded
+        height: 340px
+        text-align: center
+        .not-found
+            relative: top 50%
+            transform: translateY(-50%)
+
+    &__err
+        display: inline-block
+        margin-right: 30px
+
+    @media (min-width: 767px)
+        .modal-body
+            min-height: 480px
+            max-height: 480px
+
+        .record
+            padding-left: 0
+
+        .slots
+            margin-left: -20px
+
+    @media (max-width: 767px)
+        .modal, .modal-body
+            max-height: 70vh
+            overflow-y: hidden;
+
+        .modal-body
+            padding-top: 0
+
+        .modal-header
+            border-bottom: none
+            padding-bottom: 0
+            h3
+                display: none
+
+        &__content
+            padding-top: 170px
+
+        &__content-loading, &__not-loaded
+            display: none
+
+        &__date-selector > .bootstrap-select
+            margin-bottom: 20px !important
+
+        &__filters
+            background-color: white
+            width: 100%
+            position: absolute
+            z-index: 500
+
+        &__record-photo
+            margin-top: 15px
+            margin-bottom: 10px
+
+        .slots .btn-group
+            margin-left: 2px

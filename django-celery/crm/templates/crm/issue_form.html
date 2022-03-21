@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div class="modal fade issue-form" role="dialog" id="issue-popup">
+    <form method="POST" class="form" action="{% url 'crm:issue_create' %}">
+    {% csrf_token %}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3>{% trans 'Contact us' %}</h3>
+                </div>
+                <div class="modal-body">
+                    {% for field, errors in form.errors.items %} {% for error in errors %} {}{ field }} — {{ error }} {% endfor %} {% endfor %}
+                    <div class="form-group" rv-class-pretty-loader="c.submitting">
+                        <textarea rv-hidden-unless="c.still" class="form-control issue-form__body" required="required" rows="5" id="id_body" name="body" placeholder="{% trans 'Your message' %}"></textarea>
+                    </div>
+                    <div rv-hidden-unless="c.submitted" class="issue-form__thanks hidden">
+                        {% blocktrans %}
+                        <h3>Thank you!</h3>
+                        <p class="lead">We will reply as soon as possible.</p>
+                        {% endblocktrans %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button disabled rv-disabled="c.submit_disabled" rv-hide="c.submitted" type="submit" class="btn btn-primary issue-form__submit">{% trans 'Send!' %}</button>
+                    <button rv-hidden-unless="c.submitted" type="reset" class="btn btn-primary issue-form__close hidden">{% trans 'Close' %}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

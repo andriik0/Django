@@ -1,0 +1,51 @@
+machine:
+
+  python:
+    version: 3.4.3
+
+  node:
+    version: 6.1.0
+
+  services:
+    - redis
+
+dependencies:
+  pre:
+    - pip install flake8 mccabe pycodestyle pyflakes
+    - chmod +x ./build/*.sh .deploy/*.sh
+
+  post:
+    - bower install
+    - ./build/download_geoip_db.sh
+
+  cache_directories:
+    - ./node_modules/
+    - ./elk/static/vendor/
+    - ./geolite/
+
+test:
+  pre:
+    - gulp production
+    - ./build/store-build-information.sh
+    - cp elk/.env.circle elk/.env
+    - flake8 --config=.flake8 --exclude=static,migrations
+
+  post:
+    - bash <(curl -s https://codecov.io/bash) -t 8ce25f6b-eaf8-442a-aab4-fb6218384b6e
+    - ./build/strip-for-production.sh
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - rsync -avz --delete -rl ./.deploy deployer@128.199.32.70:/home/deployer/
+      - ssh deployer@128.199.32.70 /home/deployer/.deploy/pre-deploy.sh production
+      - rsync -vz --delete -rl --exclude-from=.deploy/exclude ./ deployer@128.199.32.70:/home/dashboard/src/
+      - ssh deployer@128.199.32.70 /home/deployer/.deploy/post-deploy.sh production
+  staging:
+    branch: staging
+    commands:
+      - rsync -avz --delete -rl ./.deploy deployer@128.199.32.70:/home/deployer/
+      - ssh deployer@128.199.32.70 /home/deployer/.deploy/pre-deploy.sh staging
+      - rsync -vz --delete -rl --exclude-from=.deploy/exclude ./ deployer@128.199.32.70:/home/staging/src/
+      - ssh deployer@128.199.32.70 /home/deployer/.deploy/post-deploy.sh staging

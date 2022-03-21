@@ -1,0 +1,44 @@
+version: '3'
+
+
+services:
+    web:
+        build: .
+        # command: python /code/manage.py runserver 0.0.0.0:8000
+        command: gunicorn bookstore_project.wsgi -b 0.0.0.0:8000
+        environment:
+            ENVIRONMENT: 'development'
+            SECRET_KEY: '@)15hki(mp&9tjkhg%!synuvw_zv&1e8b@-cxu34ve00yinkhn+6uzb@hq8q'
+            DEBUG: '1'
+            STRIPE_TEST_PUBLISHABLE_KEY: 'pk_test_51IlZBDEOZ2cof0yT248Okfl9stFfO8z1npMLBrW5gBHryiP8c5mGYTQQiolyr8smfHAJGJMoSdItl3ZUsixo7SSg00Lj0sFXAR'
+            STRIPE_TEST_SECRET_KEY: 'sk_test_51IlZBDEOZ2cof0yTUBTtch5ujZt76etq3xz40brYLNS3DV4bC3nBfWmbdIumhL6FqxpGDih4nWH7bLVMfA61hBGx00jFtJZnrW'
+            
+
+        volumes:
+            - .:/code
+
+        ports: 
+            - 8000:8000
+            - 9999:9999
+        depends_on:
+            - db
+        links:
+            - db:db
+        networks:
+            books_network:
+
+    db:
+        image: postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - '5432'
+        networks:
+            books_network:
+networks:
+    books_network:
+volumes:
+    postgres_data:
+

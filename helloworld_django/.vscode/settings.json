@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/Users/andreytp/.local/share/virtualenvs/helloworld_django-7KQ82tkY/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true
+}

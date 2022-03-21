@@ -1,0 +1,33 @@
+{% load i18n %}
+<section class="row subscription__curated-lessons">
+    <div class="col-md-12">
+        {% blocktrans %}
+        <h2>Curated lessons</h2>
+        <p>Individual lessons with your personal curator — centered around you, your interests and your goals.</p>
+        {% endblocktrans %}
+        <div class="subscription-faces teacher-grid">
+            {% for teacher in faces %}
+            <div class="teacher">
+                <img class="teacher-face img-circle" src="{{ teacher.get_teacher_photo }}" alt="{{ teacher.user.crm.full_name }}">
+                <strong>{{ teacher.user.crm.full_name }}</strong>
+                <p class="teacher-announce">{{ teacher.announce }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p>Your curator is not just a regular teacher. He is the Yoda of ELK
+            methodology. He speaks your native language, guides you through
+            the whole course, helps you with grammar, ensures you are ready for
+            classes with native speakers, and coordinates your materials and homework.
+        </p>
+        <p>Based on your plans, your curator designs an individual language
+            program tailored to your needs. If you are going to London, you can
+            practice with Stef and get used to a British accent. If you work
+            in a business, you will be talking to Adam who owns a small company.
+            If you are interested in the arts, Shawn, a poet from Brooklyn,
+            New York will help you with your classes.
+        </p>
+        <p>Check out our <a class="external" href="http://www.elk.today/blog">blog</a>
+            to read more about our curators, and pick one for your first lesson!
+        </p>
+    </div>
+</section>

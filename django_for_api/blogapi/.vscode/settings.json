@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/Users/andreytp/.local/share/virtualenvs/blogapi-LqmsPXQs/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black"
+}

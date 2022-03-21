@@ -1,0 +1,38 @@
+{% extends 'elk/boilerplate.html' %}
+{% load staticfiles %}
+{% load raven %}
+
+{% block css %}
+{% endblock %}
+
+{% block body-class %}
+{% endblock %}
+
+{% block navbar %}
+{% include 'elk/header/navbar.html' %}
+{% endblock %}
+
+{% block container %}
+    {% include "elk/_partial/flash_messages.html" %}
+    <div class="container">
+            {% block content %}
+            {% endblock %}
+    </div>
+    <!-- noindex -->
+    {% include "market/schedule_form.html" %}
+    {% include "market/timeline_entry_form.html" %}
+    {% include "market/cancel_form.html" %}
+    {% include "crm/issue_form.html" %}
+    {% include "crm/issue_popup.html" %}
+    <!-- /noindex -->
+{% endblock %}
+
+{% block basejs %}
+<script type="text/javascript">
+    Project.helpers.stripe_pk = function(){ return "{{ STRIPE_PK }}";}
+    Project.helpers.raven_dsn = function(){ return "{% sentry_public_dsn %}"; }
+</script>
+{% endblock %}
+
+{% block js %} {# pages can require custom javascript files defining this block #}
+{% endblock %}

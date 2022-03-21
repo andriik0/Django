@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="jumbotron">
+<h1 class="display_4">Newspaper app</h1>
+<p class="lead">A Newspaper website built with Djano.</p>
+<p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button"> View all articles</a>
+</p>
+</div>
+    {% comment %} {% if user.is_authenticated %}
+        Hi {{ user.username }}!
+        <p>
+            <a href="{% url 'logout' %}">Log Out</a>
+        </p>
+    {% else %}
+        <p>
+            You are not logged in
+        </p>
+        <a href="{% url 'login' %}">Log In</a>
+        <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+    </div> {% endcomment %}
+{% endblock content %}
+
+
+

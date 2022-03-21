@@ -1,0 +1,9 @@
+{% comment %} templates/home.html {% endcomment %}
+<h1>Message board homepage</h1>
+<ul>
+    
+    {% for post in all_posts %}
+        <li> {{ post }}
+    {% endfor %}
+
+</ul>
